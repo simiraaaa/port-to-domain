@@ -1,0 +1,24 @@
+{
+  "nginx_servers_dir": "/usr/local/etc/nginx/servers/",
+  "hosts": "/etc/hosts",
+  "nginx_server_settings": {
+    "listen": 80,
+    "location": {
+      "proxy_pass": "$protocol://$address:$port/$dir",
+      "index": "index.html index.htm"
+    }
+  },
+  "servers": {
+    "example": {
+      "port": 3000
+    },
+    "example2": {
+      "port": 3000,
+      "address": "192.168.0.1"
+    },
+    "test": {
+      "port": 3000,
+      "dir": "test"
+    }
+  }
+}

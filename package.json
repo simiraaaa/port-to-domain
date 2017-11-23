@@ -1,0 +1,11 @@
+{
+  "name": "port-to-domain",
+  "version": "1.0.0",
+  "description": "nginx,node.js,ローカルドメインとポート番号の設定を簡単にする。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "simiraaaa",
+  "license": "MIT"
+}
