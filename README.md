@@ -7,7 +7,7 @@ hostsファイルとnginxのserversディレクトリに設定ファイルを作
 - nginx
 - nodeJS
 
-##　目的
+## 目的
 
 `localhost:3000` を `myapp` でアクセスしたい。
 
@@ -31,7 +31,7 @@ settins.jsonを以下のように設定し、コマンドを実行します。
   }
 }
 ```
-hostsとnginxの設定に反映する。
+hostsとnginxの設定に反映する。  
 `sudo node port-to-domain.js`
 
 nginxを再起動。
