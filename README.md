@@ -41,6 +41,7 @@ nginxを再起動。
 - `nginx_servers_dir` nginx.confがserverの設定をincludeするディレクトリ
 - `hosts` hostsファイルの場所
 - `nginx_server_settings` serversに配置する設定方法。 locationに書き加えたりすることができます。
+- `nginx_restart_command` nginxを再起動するコマンド
 - `servers` 任意のドメイン名をキーに設定します
 
 ```

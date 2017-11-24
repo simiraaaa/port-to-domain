@@ -1,10 +1,11 @@
 const {
   nginx_servers_dir,
   nginx_server_settings,
+  nginx_restart_command,
   hosts,
   servers,
 } = require('./settings.json');
-const HOSTS_COMMENT = '## setting by port-to-domain.js';
+const COMMENT = '## setting by port-to-domain.js';
 const fs = require('fs');
 
 function buildServerSettings(server) {
@@ -13,23 +14,28 @@ function buildServerSettings(server) {
     for (let target in server) {
       text = text.replace(`$${target}`, server[target]);
     }
-    return `        ${key}: ${text};`
+    return `        ${key} ${text};`
   }).join('\n');
-  return `server {
-    listen: ${nginx_server_settings.listen};
-    server_name: ${server.app};
-    location / {
-${locationText}
-    }
-}
-`;
+  return [
+    COMMENT,
+    'server {',
+    `    listen ${nginx_server_settings.listen};`,
+    `    server_name ${server.app};`,
+    '    location / {',
+    locationText,
+    '    }',
+    '}'
+  ].join('\n');
 }
 
 const hostsText = fs.readFileSync(hosts).toString().split('\n');
-const index = hostsText.indexOf(HOSTS_COMMENT);
+
+// backup
+fs.writeFileSync('hosts.backup', hostsText.join('\n'));
+const index = hostsText.indexOf(COMMENT);
 
 if (index === -1) {
-  hostsText.push(HOSTS_COMMENT);
+  hostsText.push(COMMENT);
 }
 else {
   hostsText.splice(index + 1);
@@ -42,7 +48,11 @@ for (let app in servers) {
     address = '127.0.0.1',
     protocol = 'http',
   } = servers[app];
-  fs.writeFileSync(`${nginx_servers_dir}/${app}.conf`, buildServerSettings({
+  const serverPath = `${nginx_servers_dir}/${app}.conf`;
+  if (fs.existsSync(serverPath) && fs.readFileSync(serverPath).toString().split('\n')[0] === COMMENT) {
+    fs.unlinkSync(serverPath);
+  }
+  fs.writeFileSync(serverPath, buildServerSettings({
     app,
     port,
     dir,
@@ -53,3 +63,4 @@ for (let app in servers) {
 }
 
 fs.writeFileSync(hosts, hostsText.join('\n'));
+require('child_process').execSync(nginx_restart_command);

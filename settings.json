@@ -1,6 +1,7 @@
 {
   "nginx_servers_dir": "/usr/local/etc/nginx/servers/",
   "hosts": "/etc/hosts",
+  "nginx_restart_command": "nginx -s stop; nginx",
   "nginx_server_settings": {
     "listen": 80,
     "location": {
