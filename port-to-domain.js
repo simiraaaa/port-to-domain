@@ -31,7 +31,7 @@ function buildServerSettings(server) {
 const hostsText = fs.readFileSync(hosts).toString().split('\n');
 
 // backup
-fs.writeFileSync('hosts.backup', hostsText.join('\n'));
+fs.writeFileSync(__dirname + '/hosts.backup', hostsText.join('\n'));
 const index = hostsText.indexOf(COMMENT);
 
 if (index === -1) {

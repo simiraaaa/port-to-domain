@@ -8,4 +8,4 @@ const server = settings.servers[app];
 server.command = command;
 server.envdir = envdir;
 
-require('fs').writeFileSync('./settings.json', JSON.stringify(settings, null, '  '));
+require('fs').writeFileSync(__dirname + '/settings.json', JSON.stringify(settings, null, '  '));
