@@ -18,11 +18,11 @@ const log = require('child_process').spawn('sh', ['-c', `cd ${server.envdir}; ${
 
 
 log.stdout.on('data', (data) => {
-  console.log(`stdout: ${data}`);
+  console.log(data.toString());
 });
 
 log.stderr.on('data', (data) => {
-  console.error(`stderr: ${data}`);
+  console.error(data.toString());
 });
 
 log.on('close', (code) => {
