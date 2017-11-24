@@ -14,7 +14,7 @@ if (!server.command) {
   process.exit(1);
 }
 
-const log = require('child_process').spawn('sh', [`cd ${server.envdir}; ${server.command.replace(/\{PORT\}/g, server.port)}`]);
+const log = require('child_process').spawn('sh', ['-c', `cd ${server.envdir}; ${server.command.replace(/\{PORT\}/g, server.port)}`]);
 
 
 log.stdout.on('data', (data) => {
