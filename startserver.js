@@ -1,5 +1,5 @@
 const app = process.argv[2];
-const { server } = require('./settings.json').servers[app];
+const server = require('./settings.json').servers[app];
 
 if (!server) {
   console.error(`${app} not found`);
