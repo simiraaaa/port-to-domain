@@ -1,31 +1,11 @@
+const settings = require('./settings.json');
+
 const app = process.argv[2];
-const { server } = require('./settings.json').servers[app];
+const command = process.argv[3];
+const envdir = process.argv[4]|| process.argv[1].replace(/[^/]*$/, '');
 
-if (!server) {
-  console.error(`${app} not found`);
-  process.exit(4);
-}
+const server = settings.servers[app];
+server.command = command;
+server.envdir = envdir;
 
-if (!server.command) {
-  console.error(`command not found`);
-  console.error(`please addcommand`);
-  console.error(`node addcommand.js ${app} "server start command" [command running directory (default: current directory)] `);
-
-  process.exit(1);
-}
-
-const log = require('child_process').spawn(`cd ${server.envdir};
-${server.command.replace(/\{PORT\}/g, server.port)}`);
-
-
-log.stdout.on('data', (data) => {
-  console.log(`stdout: ${data}`);
-});
-
-log.stderr.on('data', (data) => {
-  console.error(`stderr: ${data}`);
-});
-
-log.on('close', (code) => {
-  console.log(`exit ${app} ${code}`);
-});
+require('fs').writeFileSync('./settings.json', JSON.stringify(settings, null, '  '));
