@@ -1,4 +1,14 @@
 const app = process.argv[2];
+
+if (!app) {
+  let servers = require('./settings.json').servers;
+  for (let k in servers) {
+    if (servers.envdir === __dirname) {
+      app = k;
+    }
+  }
+}
+
 const server = require('./settings.json').servers[app];
 
 if (!server) {
