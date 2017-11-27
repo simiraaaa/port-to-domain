@@ -3,8 +3,10 @@ var app = process.argv[2];
 if (!app) {
   let servers = require('./settings.json').servers;
   for (let k in servers) {
-    if (servers.envdir === __dirname) {
+    const envdir = servers[k].envdir || '';
+    if (envdir.replace(/\/$/, '') === process.cwd().replace(/\/$/, '')) {
       app = k;
+      break;
     }
   }
 }
