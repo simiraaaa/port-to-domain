@@ -1,4 +1,4 @@
-const app = process.argv[2];
+var app = process.argv[2];
 
 if (!app) {
   let servers = require('./settings.json').servers;
