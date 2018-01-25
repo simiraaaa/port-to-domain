@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Pages</title>
+</head>
+<body>
+  <ul id="links">
+  </ul>
+  <script>
+    function renderLinks(json) {
+      var protocol = json.protocol || location.protocol;
+      protocol.replace(':', '') + ':';
+      var servers = json.servers;
+      var links = document.getElementById('links');
+      for (var k in servers) {
+        var li = document.createElement('li');
+        links.appendChild(li);
+        var a = document.createElement('a');
+        a.textContent = k;
+        a.target = '_blank';
+        a.href = protocol + '//' + location.host + ':' + servers[k].port;
+        li.appendChild(a);
+      }
+    }
+    fetch('settings.json', {
+      method: 'GET',
+    }).then(function(res) {
+      return res.json();
+    }).then(renderLinks);
+  </script>
+</body>
+</html>
