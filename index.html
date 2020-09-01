@@ -11,8 +11,6 @@
   </ul>
   <script>
     function renderLinks(json) {
-      var protocol = json.protocol || location.protocol;
-      protocol.replace(':', '') + ':';
       var servers = json.servers;
       var links = document.getElementById('links');
       for (var k in servers) {
@@ -21,7 +19,7 @@
         var a = document.createElement('a');
         a.textContent = k;
         a.target = '_blank';
-        a.href = protocol + '//' + location.host + ':' + servers[k].port;
+        a.href = 'http://' + location.host + ':' + servers[k].port;
         li.appendChild(a);
       }
     }
