@@ -26,17 +26,17 @@ if (!server.command) {
   process.exit(1);
 }
 
-const log = require('child_process').spawn('sh', ['-c', `cd ${server.envdir}; ${server.command.replace(/\{PORT\}/g, server.port)}`]);
+const log = require('child_process').spawn(`cd ${server.envdir}; ${server.command.replace(/\{PORT\}/g, server.port)}`, [], { shell: true, stdio: 'inherit' });
 
 
-log.stdout.on('data', (data) => {
-  process.stdout.write(data.toString());
-});
+// log.stdout.on('data', (data) => {
+//   process.stdout.write(data);
+// });
 
-log.stderr.on('data', (data) => {
-  process.stderr.write(data.toString());
-});
+// log.stderr.on('data', (data) => {
+//   process.stderr.write(data);
+// });
 
 log.on('close', (code) => {
-  process.stdout.write(`exit ${app} ${code}`);
+  process.stdout.write(`exit ${app} ${code}\n`);
 });
